@@ -1,11 +1,14 @@
 {
-  "install": {
-    "cmds": ["pip install -r requirements.txt"]
-  },
-  "build": {
-    "cmds": ["python manage.py collectstatic --noinput"]
+  "$schema": "https://schema.railpack.com",
+  "steps": {
+    "install": {
+      "commands": ["pip install -r requirements.txt"]
+    },
+    "build": {
+      "commands": ["python manage.py collectstatic --noinput"]
+    }
   },
   "deploy": {
-    "cmd": "python manage.py migrate && gunicorn sbspices_site.wsgi"
+    "startCommand": "python manage.py migrate && gunicorn sbspices_site.wsgi"
   }
 }
