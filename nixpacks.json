@@ -1,0 +1,12 @@
+[phases.setup]
+nixPkgs = ["...", "python3"] # Ensure your dependencies are here
+
+[phases.build]
+cmds = [
+  "pip install -r requirements.txt",
+  "python manage.py collectstatic --noinput"
+]
+
+[start]
+# Run migrations and then start Gunicorn
+cmd = "python manage.py migrate && gunicorn my_project.wsgi"
