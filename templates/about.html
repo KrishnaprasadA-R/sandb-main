@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}About Us | S&B Spices{% endblock %}
+
+{% block content %}
+<section class="about-section">
+    <div class="about-container">
+        <div class="about-text">
+            <h2>About Us</h2>
+            <p>We are a trusted cardamom export company committed to delivering high-quality cardamom to international markets.</p>
+            <p>Our strength lies in offering premium cardamom, including certified organic varieties.</p>
+            <p>Each batch is carefully inspected to ensure purity, freshness, and consistency.</p>
+        </div>
+        <div class="about-image">
+            <img src="{% static 'images/cardamom-bowl.png' %}" alt="Cardamom">
+        </div>
+    </div>
+</section>
+
+<section class="export-section">
+    <div class="export-container">
+        <div class="export-image">
+            <img src="{% static 'images/export-logistics.png' %}" alt="Global Export">
+        </div>
+        <div class="export-text">
+            <h2>Global Export & Reliable Logistics</h2>
+            <p>Our commitment to quality continues beyond harvesting.</p>
+            <p>Every shipment is handled with care using proper storage and food-grade packaging.</p>
+            <p>With accurate documentation and smooth customs processing, delivery is reliable.</p>
+        </div>
+    </div>
+</section>
+
+<section class="machine-section">
+    <div class="machine-container">
+        <div class="machine-image">
+            <img src="{% static 'images/machine.png' %}" alt="Faso VG 3084 Size Grader">
+        </div>
+
+        <div class="machine-card">
+            <h2>Advanced Size Grading Technology</h2>
+            <h3>Faso VG 3084 Size Grader</h3>
+            <p>
+                Our processing line includes the <strong>Faso VG 3084</strong>, an industrial food size-grading machine
+                built to deliver precise and consistent grading quality.
+            </p>
+
+            <ul class="machine-list">
+                <li><strong>Function:</strong> Size grading for cardamom, pepper, and dhal.</li>
+                <li><strong>Performance:</strong> High-speed and accurate sorting with minimal rejection.</li>
+                <li><strong>Operation:</strong> Fully automatic workflow for high efficiency and multi-grade output.</li>
+            </ul>
+
+            <div class="machine-metrics">
+                <div class="metric-box">
+                    <span class="metric-value">300-500</span>
+                    <span class="metric-label">Kg/hr Capacity</span>
+                </div>
+                <div class="metric-box">
+                    <span class="metric-value">Auto</span>
+                    <span class="metric-label">Operation Mode</span>
+                </div>
+                <div class="metric-box">
+                    <span class="metric-value">Multi</span>
+                    <span class="metric-label">Grade Output</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer is centralized in base.html -->
+
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}Admin Dashboard{% endblock %}
+
+{% block content %}
+<h2>Manage Products</h2>
+
+<a href="{{ url_for('admin_products') }}" class="btn-add">Add New Product</a>
+
+<table class="product-table">
+    <tr>
+        <th>Image</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+
+    {% for p in products %}
+    <tr>
+        <td><img src="{{ url_for('static', filename='uploads/' ~ p.image) }}" width="50"></td>
+        <td>{{ p.name }}</td>
+        <td>₹{{ p.price }}</td>
+        <td>{{ p.availability }}</td>
+        <td>
+            <a href="/admin/product/delete/{{ p.id }}">🗑</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

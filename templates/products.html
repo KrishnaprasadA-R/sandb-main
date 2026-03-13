@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Our Products | S&B Spices{% endblock %}
+{% block head_extra %}
+<link rel="stylesheet" href="{% static 'css/products.css' %}?v=20260224a">
+{% endblock %}
+
+{% block content %}
+<section class="product-page">
+    <form method="get" class="product-search">
+        <input type="text" name="search" placeholder="Search product" value="{{ search }}">
+    </form>
+
+    <div class="product-banner">
+        <img src="{% static 'images/product-banner.jpg' %}" alt="Product Banner">
+    </div>
+
+    <div class="product-grid">
+        {% for p in products %}
+        <div class="product-card">
+            <div class="product-img-wrap">
+                {% if p.image %}
+                <img src="{{ p.image.url }}" alt="{{ p.name }}">
+                {% else %}
+                <img src="{% static 'images/cardamom.png' %}" alt="{{ p.name }}">
+                {% endif %}
+            </div>
+            <div class="product-card-body">
+                <h4>{{ p.name }}</h4>
+                <p class="bm-name">₹{{ p.grade }}</p>
+                <p class="price">₹{{ p.price }}</p>
+                <p class="stock {% if p.availability == 'Out of Stock' %}out{% endif %}">{{ p.availability }}</p>
+
+                <div class="rating">
+                    {% for _ in "12345" %}
+                        {% if forloop.counter <= p.rating %}★{% else %}☆{% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <p>No products found.</p>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- Footer moved to base.html (centralized) -->
+
+{% endblock %}

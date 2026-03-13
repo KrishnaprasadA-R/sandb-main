@@ -1,0 +1,45 @@
+{% extends "admin/admin_base.html" %}
+
+{% block title %}Manage Products{% endblock %}
+
+{% block content %}
+<div class="admin-container">
+
+  <h2 class="admin-title">Customer Enquiries</h2>
+
+  <table class="enquiry-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Company</th>
+        <th>Place</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Grade</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {% for e in enquiries %}
+      <tr>
+        <td>{{ e.name }}</td>
+        <td>{{ e.company }}</td>
+        <td>{{ e.place }}</td>
+        <td>{{ e.email }}</td>
+        <td>{{ e.phone }}</td>
+        <td>{{ e.grade }}</td>
+        <td>
+          <a href="/delete-enquiry/{{ e.id }}" 
+             class="delete-btn"
+             onclick="return confirm('Delete this enquiry?')">
+             Delete
+          </a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+</div>
+{% endblock %}

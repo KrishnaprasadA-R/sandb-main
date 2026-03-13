@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="S&B Spices - Premium Cardamom Exporters from Kerala, India.">
+    <meta name="keywords" content="Cardamom Export, Kerala Spices, Green Cardamom, Indian Spices Exporter">
+    <meta name="author" content="S&B Spices">
+    <title>{% block title %}S&B Spices{% endblock %}</title>
+    <link rel="preload" as="image" href="{% static 'images/logo.png' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260313a">
+    {% block head_extra %}{% endblock %}
+</head>
+<body>
+<nav class="navbar">
+    <div class="logo">
+        <a href="{% url 'home' %}">
+            <img src="{% static 'images/logo.png' %}" alt="S&B Spices Logo" class="logo-img">
+        </a>
+    </div>
+    <div class="menu-toggle" id="mobile-menu">☰</div>
+    <ul class="nav-links">
+        <li><a href="{% url 'home' %}">Home</a></li>
+        <li><a href="{% url 'products' %}">Our Products</a></li>
+        <li><a href="{% url 'about' %}">About Us</a></li>
+        <li><a href="{% url 'contact' %}">Contact Us</a></li>
+        {% if request.user.is_authenticated and request.user.is_staff %}
+        <li><a href="/admin/" class="login-btn">Admin</a></li>
+        <li><a href="{% url 'logout' %}" class="login-btn">Logout</a></li>
+        {% else %}
+        <li><a href="{% url 'login' %}" class="login-btn">Login</a></li>
+        {% endif %}
+    </ul>
+</nav>
+{% block content %}{% endblock %}
+<footer class="main-footer">
+    <div class="footer-content">
+        <div class="footer-col">
+            <h4>Subscribe to our Newsletter</h4>
+            <form class="footer-subscribe">
+                <input type="email" placeholder="Your email address" required>
+                <button type="submit">Subscribe</button>
+            </form>
+        </div>
+
+        <div class="footer-col">
+            <h4>Quick Links</h4>
+            <ul class="footer-links">
+                <li><a href="{% url 'home' %}">Home</a></li>
+                <li><a href="{% url 'products' %}">Our Products</a></li>
+                <li><a href="{% url 'about' %}">About Us</a></li>
+                <li><a href="{% url 'contact' %}">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <div class="footer-col">
+            <h4>Contact Us</h4>
+            <p>S&B Spices</p>
+            <p>Kuzhitholu Road, Chettukuzhi, Kerala 685551</p>
+            <p>sandbspices@gmail.com</p>
+            <p>+91 95674 24974</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 S&B Spices. All rights reserved.</p>
+    </div>
+</footer>
+<script>
+const menu = document.getElementById("mobile-menu");
+const navLinks = document.querySelector(".nav-links");
+menu.addEventListener("click", () => {
+    navLinks.classList.toggle("active");
+});
+document.querySelectorAll(".nav-links a").forEach(link => {
+    link.addEventListener("click", () => {
+        navLinks.classList.remove("active");
+    });
+});
+</script>
+{% block scripts %}{% endblock %}
+</body>
+</html>

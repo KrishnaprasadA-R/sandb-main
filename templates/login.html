@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Login | S&B Spices{% endblock %}
+{% block head_extra %}
+<link rel="stylesheet" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<section class="login-section">
+    <div class="login-card">
+        <h2>Login</h2>
+        <p class="login-sub">Login with Django admin username and password</p>
+
+        {% if messages %}
+            {% for message in messages %}
+                <p style="color:#b91c1c; margin-bottom:10px;">{{ message }}</p>
+            {% endfor %}
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+            <div class="form-group">
+                <input type="text" name="username" placeholder="Username" required>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" placeholder="Password" required>
+            </div>
+            <button type="submit" class="login-btn">Login</button>
+        </form>
+    </div>
+</section>
+{% endblock %}

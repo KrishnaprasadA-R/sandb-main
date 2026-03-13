@@ -1,0 +1,20 @@
+{% extends "admin/base.html" %}
+{% load static %}
+
+{% block title %}S&B Spices Admin{% endblock %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/admin-theme.css' %}?v=20260224b">
+{% endblock %}
+
+{% block branding %}
+<div class="brand-wrap">
+  <h1 id="site-name"><a href="{% url 'admin:index' %}">S&amp;B Spices Admin</a></h1>
+  <span class="brand-subtitle">Operations Dashboard</span>
+</div>
+{% endblock %}
+
+{% block nav-global %}
+<a class="view-site-link" href="/" target="_blank" rel="noopener">View Website</a>
+{% endblock %}

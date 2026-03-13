@@ -1,0 +1,40 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block extrastyle %}
+{{ block.super }}
+<link rel="stylesheet" href="{% static 'css/admin-theme.css' %}?v=20260224b">
+{% endblock %}
+
+{% block content %}
+<div class="admin-login-wrap">
+  <div class="admin-login-card">
+    <h1>Admin Login</h1>
+    <p>Use your Django superuser credentials.</p>
+
+    {% if form.errors and not form.non_field_errors %}
+      <p class="errornote">Please correct the errors below.</p>
+    {% endif %}
+
+    {% if form.non_field_errors %}
+      {% for error in form.non_field_errors %}
+        <p class="errornote">{{ error }}</p>
+      {% endfor %}
+    {% endif %}
+
+    <form action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+      <div class="form-row">
+        {{ form.username.label_tag }}
+        {{ form.username }}
+      </div>
+      <div class="form-row">
+        {{ form.password.label_tag }}
+        {{ form.password }}
+      </div>
+      <div class="submit-row">
+        <input type="submit" value="{% trans 'Log in' %}">
+      </div>
+    </form>
+  </div>
+</div>
+{% endblock %}

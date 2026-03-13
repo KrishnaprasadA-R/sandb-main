@@ -1,0 +1,183 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}{{ pages.0.title }}{% endblock %}
+
+{% block content %}
+<section class="hero" id="hero">
+    <div class="hero-card">
+        <h1 id="hero-heading"></h1>
+        <p id="hero-desc"></p>
+        <a href="{% url 'contact' %}" class="btn">Know More</a>
+    </div>
+
+    <div class="hero-arrow left" onclick="prevSlide()">&#10094;</div>
+    <div class="hero-arrow right" onclick="nextSlide()">&#10095;</div>
+
+    <div class="hero-dots">
+        {% for page in pages %}
+        <span class="dot" onclick="goToSlide({{ forloop.counter0 }})"></span>
+        {% endfor %}
+    </div>
+</section>
+
+<section class="home-about-section">
+  <div class="about-wrapper">
+    <div class="about-card">
+      <img class="about-leaf" src="{% static 'images/leaf.png' %}" alt="">
+      <h3>About Us</h3>
+      <p>We are a leading cardamom export company delivering high-quality produce to international markets with strict quality standards.</p>
+      <a href="{% url 'about' %}" class="btn-primary">Know More</a>
+    </div>
+  </div>
+</section>
+
+<section class="best-moving">
+  <img src="{% static 'images/cardamom-left.png' %}" class="bm-left-img" alt="">
+  <h2 class="bm-title">Best-Moving Products</h2>
+
+  <div class="bm-grid">
+    {% for p in products %}
+    <div class="bm-card">
+      <div class="bm-img-wrap">
+        {% if p.image %}
+        <img src="{{ p.image.url }}" alt="{{ p.name }}">
+        {% else %}
+        <img src="{% static 'images/cardamom.png' %}" alt="{{ p.name }}">
+        {% endif %}
+      </div>
+      <div class="bm-card-body">
+        <h4 class="bm-name">{{ p.name }}</h4>
+        <p class="bm-price">₹{{ p.price }}</p>  
+        <p class="bm-grade">{{ p.grade }}</p>
+        <p class="bm-stock {% if p.availability == 'Out of Stock' %}out{% endif %}">{{ p.availability }}</p>
+        <div class="bm-rating">
+          {% for _ in "12345" %}
+            {% if forloop.counter <= p.rating %}★{% else %}☆{% endif %}
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <p>No products yet.</p>
+    {% endfor %}
+  </div>
+
+  <a href="{% url 'products' %}" class="bm-btn">View all products</a>
+</section>
+
+<section class="services-section">
+  <div class="services-wrapper">
+    <div class="services-card">
+      <h2>Our Services</h2>
+      <div class="service-item"><span class="service-dot"></span><div><h4>Global Logistics & Shipping</h4><p>Seamless worldwide shipping and tracking from our facility to your destination port.</p></div></div>
+      <div class="service-item"><span class="service-dot"></span><div><h4>Guaranteed Quality Assurance</h4><p>External testing and certifications to ensure global standards compliance.</p></div></div>
+      <div class="service-item"><span class="service-dot"></span><div><h4>Customized Bulk Ordering</h4><p>Flexible high-volume handling from 50 kg to multi-ton shipments.</p></div></div>
+      <div class="service-item"><span class="service-dot"></span><div><h4>Secure Payment Terms</h4><p>Protected transactions with internationally recognized payment methods.</p></div></div>
+    </div>
+
+    <div class="services-visual">
+      <img class="bowl-img" src="{% static 'images/bowl-cardamom.png' %}" alt="">
+      <img class="platform-img" src="{% static 'images/platform.png' %}" alt="">
+    </div>
+  </div>
+</section>
+
+<section class="enquiry-section">
+  <div class="enquiry-box">
+    {% if messages %}
+      {% for message in messages %}
+      <div class="success-modal">
+        <div class="success-content">
+          <p>{{ message }}</p>
+          <button onclick="closeModal()" type="button">OK</button>
+        </div>
+      </div>
+      {% endfor %}
+    {% endif %}
+
+    <form id="enquiry-form" action="{% url 'enquiry' %}" method="POST">
+      {% csrf_token %}
+      <div class="form-row"><label>Name</label><input name="name" placeholder="Enter your full name" required></div>
+      <div class="form-row"><label>Company Name</label><input name="company" placeholder="Enter your company name"></div>
+      <div class="form-row">
+        <label>Place</label>
+        <select name="country">
+          <option value="">Select your Place</option>
+          <option>India</option><option>UAE</option><option>USA</option><option>UK</option>
+        </select>
+      </div>
+      <div class="form-row"><label>Email</label><input type="email" name="email" placeholder="Enter your email address" required></div>
+      <div class="form-row"><label>Phone</label><input name="phone" pattern="[0-9]{10}" placeholder="Enter your phone number" required></div>
+      <div class="form-row">
+        <label>Cardamom Grade</label>
+        <select name="grade">
+          <option value="">Select your cardamom grade</option>
+          <option>Bold</option><option>Medium</option><option>Small</option>
+        </select>
+      </div>
+      <button class="enquiry-btn" type="submit">Send Enquiry</button>
+    </form>
+  </div>
+</section>
+
+   
+
+<style>
+.hero { transition: background-image 0.6s ease-in-out, opacity 0.4s ease; }
+body { animation: fadeIn 1s ease-in; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes float { 0% { transform: translateY(0px); } 50% { transform: translateY(-12px); } 100% { transform: translateY(0px); } }
+.bm-left-img, .bowl-img { animation: float 4s ease-in-out infinite; }
+.bm-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+.bm-card:hover { transform: translateY(-8px); }
+.enquiry-box { animation: fadeUp 1s ease; }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+</style>
+{% endblock %}
+
+{% block scripts %}
+<script>
+const pages = {{ pages_json|safe }};
+let currentSlide = 0;
+let slideInterval;
+const hero = document.getElementById("hero");
+const heading = document.getElementById("hero-heading");
+const desc = document.getElementById("hero-desc");
+const dots = document.querySelectorAll(".dot");
+
+function showSlide(index) {
+    if (index < 0) index = pages.length - 1;
+    if (index >= pages.length) index = 0;
+    currentSlide = index;
+    hero.style.opacity = 0;
+    setTimeout(() => {
+        hero.style.backgroundImage = `url("/static/images/${pages[index].bg_image}")`;
+        heading.innerHTML = pages[index].heading;
+        desc.innerHTML = pages[index].description;
+        dots.forEach(dot => dot.classList.remove("active"));
+        dots[index].classList.add("active");
+        hero.style.opacity = 1;
+    }, 300);
+}
+
+function nextSlide() { showSlide(currentSlide + 1); }
+function prevSlide() { showSlide(currentSlide - 1); }
+function goToSlide(index) { showSlide(index); }
+function startAutoSlide() { slideInterval = setInterval(() => nextSlide(), 7000); }
+showSlide(0);
+startAutoSlide();
+
+document.getElementById("enquiry-form").addEventListener("submit", function(e) {
+  const phone = document.querySelector("[name='phone']").value;
+  if (phone.length < 10) {
+    alert("Phone number must be 10 digits");
+    e.preventDefault();
+  }
+});
+
+function closeModal() {
+  const modal = document.querySelector('.success-modal');
+  if (modal) modal.style.display = 'none';
+}
+</script>
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block content %}
+<div class="admin-home-wrap">
+  <section class="admin-hero">
+    <h1>Operations Dashboard</h1>
+    <p>Manage products, enquiries, and site content from one place.</p>
+  </section>
+
+  <section class="admin-app-grid">
+    {% for app in app_list %}
+      <article class="admin-app-card">
+        <header>
+          <h2>{{ app.name }}</h2>
+          <span>{{ app.app_label|upper }}</span>
+        </header>
+
+        <ul>
+          {% for model in app.models %}
+            <li>
+              <div class="model-meta">
+                <strong>{{ model.name }}</strong>
+                <small>Manage records</small>
+              </div>
+              <div class="model-actions">
+                {% if model.admin_url %}
+                  <a class="button" href="{{ model.admin_url }}">Open</a>
+                {% endif %}
+                {% if model.add_url %}
+                  <a class="button addlink" href="{{ model.add_url }}">Add</a>
+                {% endif %}
+              </div>
+            </li>
+          {% endfor %}
+        </ul>
+      </article>
+    {% empty %}
+      <p class="empty-state">No admin apps available for your account.</p>
+    {% endfor %}
+  </section>
+</div>
+{% endblock %}

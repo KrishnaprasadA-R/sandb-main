@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Contact Us | S&B Spices{% endblock %}
+
+{% block content %}
+<section class="contact-section">
+    <h2 class="section-title">Contact Us</h2>
+    <div class="contact-cards">
+        <div class="contact-card">
+            <img src="{% static 'images/visit.png' %}" class="card-img" alt="Visit">
+            <h4>Visit Us</h4>
+            <p><strong>S&amp;B Spices</strong><br>Kuzhitholu Road, Chettukuzhi, Kerala – 685551</p>
+            <a href="https://www.google.com/maps/search/?api=1&query=S+%26+B+Spices+Kuzhitholu+Road+Chettukuzhi+Kerala+685551" class="btn-small" target="_blank" rel="noopener noreferrer">View on Google Maps</a>
+        </div>
+        <div class="contact-card">
+            <img src="{% static 'images/email.png' %}" class="card-img" alt="Email">
+            <h4>Contact Us</h4>
+            <p>Our official email<br><br>sandbspices@gmail.com</p>
+            <a href="mailto:sandbspices@gmail.com" class="btn-small">Send Mail</a>
+        </div>
+        <div class="contact-card">
+            <img src="{% static 'images/Call.png' %}" class="card-img" alt="Call">
+            <h4>Call Us</h4>
+            <p>Official support<br><br>+91 95674 24974</p>
+            <a href="tel:+919567424974" class="btn-small">Call</a>
+        </div>
+    </div>
+
+    <hr>
+    <h3 class="connect-title">Connect With Us</h3>
+    <div class="social-icons">
+        <a href="https://wa.me/919567424974" target="_blank" rel="noopener noreferrer"><img src="{% static 'images/Whatsapp.png' %}" alt="WhatsApp"></a>
+        <a href="https://www.instagram.com/s_and_b_spices" target="_blank" rel="noopener noreferrer"><img src="{% static 'images/ig.png' %}" alt="Instagram"></a>
+        <a href="https://www.facebook.com/" target="_blank" rel="noopener noreferrer"><img src="{% static 'images/Facebook.png' %}" alt="Facebook"></a>
+    </div>
+</section>
+
+<!-- Footer moved to base.html (centralized) -->
+
+{% endblock %}
