@@ -5,10 +5,12 @@
       "commands": ["pip install -r requirements.txt"]
     },
     "build": {
+      "inputs": [{ "local": true, "include": ["."] }],
       "commands": ["python manage.py collectstatic --noinput"]
     }
   },
   "deploy": {
+    "inputs": [{ "local": true, "include": ["."] }],
     "startCommand": "python manage.py migrate && gunicorn sbspices_site.wsgi"
   }
 }
