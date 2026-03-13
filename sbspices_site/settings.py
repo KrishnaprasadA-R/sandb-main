@@ -5,12 +5,13 @@ from importlib.util import find_spec
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get("SECRET_KEY", "dev-only-change-me")
-DEBUG = os.environ.get("DEBUG", "True").lower() == "true"
-
+# DEBUG = os.environ.get("DEBUG", "True").lower() == "true"
+DEBUG = True
+ALLOWED_HOSTS=['*']
 allowed_hosts = os.environ.get("ALLOWED_HOSTS", "")
-ALLOWED_HOSTS = [h.strip() for h in allowed_hosts.split(",") if h.strip()]
-if not ALLOWED_HOSTS:
-    ALLOWED_HOSTS = ["*"] if DEBUG else ["127.0.0.1", "localhost"]
+# ALLOWED_HOSTS = [h.strip() for h in allowed_hosts.split(",") if h.strip()]
+# if not ALLOWED_HOSTS:
+#     ALLOWED_HOSTS = ["*"] if DEBUG else ["127.0.0.1", "localhost"]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
